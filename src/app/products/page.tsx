@@ -29,7 +29,7 @@ const products: ProductItemType[] = [
 		price: 300,
 		coverImage: {
 			alt: "Product 3",
-			src: "https://picsum.photos/seed/3/320/320",
+			src: "https://picsum.photos/seed/3/330/320",
 		},
 	},
 	{
