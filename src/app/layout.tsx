@@ -18,12 +18,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<ul className="mt-2 flex justify-center gap-2">
 						<li>
 							<ActiveLink href="/" activeClassName="underline">
-								Homepage
+								Home
 							</ActiveLink>
 						</li>
 						<li>
 							<ActiveLink href="/products" activeClassName="underline">
-								Products
+								All
 							</ActiveLink>
 						</li>
 					</ul>
