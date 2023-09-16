@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 							</ActiveLink>
 						</li>
 						<li>
-							<ActiveLink href="/products" exact activeClassName="underline">
+							<ActiveLink href="/products" activeClassName="underline">
 								All
 							</ActiveLink>
 						</li>
