@@ -5,13 +5,6 @@ import clsx from "clsx";
 import type { Route } from "next";
 import { usePathname } from "next/navigation";
 
-export async function generateStaticParams() {
-	const res = await fetch(`https://naszsklep-api.vercel.app/api/products`);
-	const products = (await res.json()) as { id: string; title: string }[];
-
-	return products.map((product) => ({ productId: product.id }));
-}
-
 export const ActiveLink = <T extends string>({
 	href,
 	children,
