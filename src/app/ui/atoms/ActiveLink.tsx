@@ -14,13 +14,12 @@ export const ActiveLink = <T extends string>({
 }: {
 	activeClassName?: string;
 	exact?: boolean;
-	href: Route<T> | URL;
+	href: Route<T>;
 	children: React.ReactNode;
 	className?: string;
 }) => {
-	const urlString = typeof href === "string" ? href : href.href;
 	const pathname = usePathname();
-	const isActive = exact ? urlString === pathname : pathname.startsWith(urlString);
+	const isActive = exact ? href === pathname : pathname.startsWith(href);
 
 	return (
 		<Link
