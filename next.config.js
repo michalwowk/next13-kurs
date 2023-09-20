@@ -3,6 +3,9 @@ const nextConfig = {
 	experimental: {
 		typedRoutes: true,
 	},
+	images: {
+		domains: ["media.graphassets.com"],
+	},
 	async redirects() {
 		return [
 			{

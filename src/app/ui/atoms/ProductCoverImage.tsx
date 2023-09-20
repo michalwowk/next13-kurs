@@ -1,9 +1,11 @@
+import NextImage from "next/image";
+
 type ProductCoverImageProps = { src: string; alt: string };
 
 export const ProductCoverImage = ({ src, alt }: ProductCoverImageProps) => {
 	return (
 		<div className="aspect-square overflow-hidden rounded-md">
-			<img
+			<NextImage
 				width={320}
 				height={320}
 				src={src}
