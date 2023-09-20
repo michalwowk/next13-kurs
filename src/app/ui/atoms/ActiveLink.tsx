@@ -22,10 +22,7 @@ export const ActiveLink = <T extends string>({
 	const isActive = exact ? href === pathname : pathname.startsWith(href);
 
 	return (
-		<Link
-			className={clsx("text-blue-400 hover:text-blue-600", className, isActive && activeClassName)}
-			href={href}
-		>
+		<Link className={clsx(className, isActive && activeClassName)} href={href}>
 			{children}
 		</Link>
 	);

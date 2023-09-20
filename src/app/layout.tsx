@@ -1,9 +1,12 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
+import { Shirt } from "lucide-react";
+import Link from "next/link";
+import clsx from "clsx";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Manrope({ subsets: ["latin", "latin-ext"] });
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -13,22 +16,28 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
-				<nav>
-					<ul className="mt-2 flex justify-center gap-2">
-						<li>
-							<ActiveLink href="/" exact activeClassName="underline">
-								Home
-							</ActiveLink>
-						</li>
-						<li>
-							<ActiveLink href="/products" activeClassName="underline">
-								All
-							</ActiveLink>
-						</li>
-					</ul>
+			<body className={clsx(inter.className, "flex h-screen flex-col")}>
+				<nav className="border-b-2 py-2">
+					<div className="container mx-auto flex items-center justify-between">
+						<Link href="/">
+							<Shirt />
+						</Link>
+						<ul className="flex justify-center gap-2 ">
+							<li>
+								<ActiveLink className="font-semibold" href="/" exact activeClassName="underline">
+									Home
+								</ActiveLink>
+							</li>
+							<li>
+								<ActiveLink className="font-semibold" href="/products" activeClassName="underline">
+									All
+								</ActiveLink>
+							</li>
+						</ul>
+						<div></div>
+					</div>
 				</nav>
-				{children}
+				<div className="flex-grow">{children}</div>
 				<footer>
 					<p className="text-center text-sm text-gray-500">&copy; 2023</p>
 				</footer>
