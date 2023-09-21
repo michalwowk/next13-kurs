@@ -19,8 +19,9 @@ const documents = {
     "query ProductGetById($id: ID!) {\n  product(where: {id: $id}) {\n    ...ProductListItem\n  }\n}": types.ProductGetByIdDocument,
     "fragment ProductListItem on Product {\n  id\n  name\n  categories(first: 1) {\n    name\n  }\n  images(first: 1) {\n    url\n  }\n  price\n}": types.ProductListItemFragmentDoc,
     "query ProductsGetList($first: Int, $skip: Int) {\n  products(first: $first, skip: $skip) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListDocument,
-    "query ProductsGetListByCategorySlug($categorySlug: String!) {\n  products(where: {categories_some: {slug: $categorySlug}}) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListByCategorySlugDocument,
+    "query ProductsGetListByCategorySlug($categorySlug: String!, $first: Int, $skip: Int) {\n  products(\n    where: {categories_some: {slug: $categorySlug}}\n    first: $first\n    skip: $skip\n  ) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListByCategorySlugDocument,
     "query ProductsGetTotalCount {\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetTotalCountDocument,
+    "query ProductsGetTotalCountByCategorySlug($categorySlug: String) {\n  productsConnection(where: {categories_some: {slug: $categorySlug}}) {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetTotalCountByCategorySlugDocument,
     "query SingleProductGetItemById($id: ID!) {\n  product(where: {id: $id}) {\n    id\n    name\n    price\n    categories(first: 1) {\n      name\n    }\n    images(first: 1) {\n      url\n    }\n    description\n  }\n}": types.SingleProductGetItemByIdDocument,
 };
 
@@ -47,11 +48,15 @@ export function graphql(source: "query ProductsGetList($first: Int, $skip: Int) 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query ProductsGetListByCategorySlug($categorySlug: String!) {\n  products(where: {categories_some: {slug: $categorySlug}}) {\n    ...ProductListItem\n  }\n}"): typeof import('./graphql').ProductsGetListByCategorySlugDocument;
+export function graphql(source: "query ProductsGetListByCategorySlug($categorySlug: String!, $first: Int, $skip: Int) {\n  products(\n    where: {categories_some: {slug: $categorySlug}}\n    first: $first\n    skip: $skip\n  ) {\n    ...ProductListItem\n  }\n}"): typeof import('./graphql').ProductsGetListByCategorySlugDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "query ProductsGetTotalCount {\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}"): typeof import('./graphql').ProductsGetTotalCountDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "query ProductsGetTotalCountByCategorySlug($categorySlug: String) {\n  productsConnection(where: {categories_some: {slug: $categorySlug}}) {\n    aggregate {\n      count\n    }\n  }\n}"): typeof import('./graphql').ProductsGetTotalCountByCategorySlugDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -10743,6 +10743,8 @@ export type ProductsGetListQuery = { products: Array<{ id: string, name: string,
 
 export type ProductsGetListByCategorySlugQueryVariables = Exact<{
   categorySlug: Scalars['String']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
@@ -10752,6 +10754,13 @@ export type ProductsGetTotalCountQueryVariables = Exact<{ [key: string]: never; 
 
 
 export type ProductsGetTotalCountQuery = { productsConnection: { aggregate: { count: number } } };
+
+export type ProductsGetTotalCountByCategorySlugQueryVariables = Exact<{
+  categorySlug?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ProductsGetTotalCountByCategorySlugQuery = { productsConnection: { aggregate: { count: number } } };
 
 export type SingleProductGetItemByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -10846,8 +10855,12 @@ export const ProductsGetListDocument = new TypedDocumentString(`
   price
 }`) as unknown as TypedDocumentString<ProductsGetListQuery, ProductsGetListQueryVariables>;
 export const ProductsGetListByCategorySlugDocument = new TypedDocumentString(`
-    query ProductsGetListByCategorySlug($categorySlug: String!) {
-  products(where: {categories_some: {slug: $categorySlug}}) {
+    query ProductsGetListByCategorySlug($categorySlug: String!, $first: Int, $skip: Int) {
+  products(
+    where: {categories_some: {slug: $categorySlug}}
+    first: $first
+    skip: $skip
+  ) {
     ...ProductListItem
   }
 }
@@ -10871,6 +10884,15 @@ export const ProductsGetTotalCountDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<ProductsGetTotalCountQuery, ProductsGetTotalCountQueryVariables>;
+export const ProductsGetTotalCountByCategorySlugDocument = new TypedDocumentString(`
+    query ProductsGetTotalCountByCategorySlug($categorySlug: String) {
+  productsConnection(where: {categories_some: {slug: $categorySlug}}) {
+    aggregate {
+      count
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ProductsGetTotalCountByCategorySlugQuery, ProductsGetTotalCountByCategorySlugQueryVariables>;
 export const SingleProductGetItemByIdDocument = new TypedDocumentString(`
     query SingleProductGetItemById($id: ID!) {
   product(where: {id: $id}) {

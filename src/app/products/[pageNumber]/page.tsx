@@ -1,16 +1,9 @@
+import { PRODUCTS_PER_PAGE } from "../../../constants";
+import { getTotalNumberOfPages } from "../../../utils";
 import { executeGraphql } from "@/api/utils";
 import { ProductsPagination } from "@/ui/molecules/ProductsPagination";
 import { ProductList } from "@/ui/organisms/ProductList";
 import { ProductsGetListDocument, ProductsGetTotalCountDocument } from "@/gql/graphql";
-
-const PRODUCTS_PER_PAGE = 4;
-
-const getTotalNumberOfPages = (
-	totalAmountOfProducts: number,
-	PRODUCTS_PER_PAGE: number,
-): number => {
-	return Math.ceil(totalAmountOfProducts / PRODUCTS_PER_PAGE);
-};
 
 export async function generateStaticParams() {
 	const { productsConnection } = await executeGraphql(ProductsGetTotalCountDocument);
