@@ -1,0 +1,5 @@
+query ProductsGetListByCategorySlug($categorySlug: String!) {
+	products(where: { categories_some: { slug: $categorySlug } }) {
+		...ProductListItem
+	}
+}

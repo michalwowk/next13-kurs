@@ -1,0 +1,14 @@
+query SingleProductGetItemById($id: ID!) {
+	product(where: { id: $id }) {
+		id
+		name
+		price
+		categories(first: 1) {
+			name
+		}
+		images(first: 1) {
+			url
+		}
+		description
+	}
+}
