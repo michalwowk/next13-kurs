@@ -19,8 +19,6 @@ export const SuggestedProducts = async ({
 		categorySlug,
 	});
 
-	console.log(products);
-
 	if (!products.length) {
 		return null;
 	}
