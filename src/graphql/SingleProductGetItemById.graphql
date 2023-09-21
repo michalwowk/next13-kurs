@@ -3,8 +3,13 @@ query SingleProductGetItemById($id: ID!) {
 		id
 		name
 		price
+		collections(first: 1) {
+			name
+			slug
+		}
 		categories(first: 1) {
 			name
+			slug
 		}
 		images(first: 1) {
 			url

@@ -1,10 +1,13 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import NextImage from "next/image";
+import { Suspense } from "react";
 import { executeGraphql } from "../../../api/utils";
 
 import { formatMoney } from "../../../utils";
 import { SingleProductGetItemByIdDocument } from "@/gql/graphql";
+import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
+import { Skeleton } from "@/ui/atoms/Skeleton";
 
 export async function generateMetadata({
 	params,
@@ -58,6 +61,14 @@ export default async function ProductPage({ params }: { params: { productId: str
 					</div>
 				</div>
 			</div>
+
+			<Suspense fallback={<Skeleton className="h-20 w-full" />}>
+				<SuggestedProducts
+					currentProductId={product.id}
+					categorySlug={product.categories[0]?.slug}
+					collectionSlug={product.collections[0]?.slug}
+				/>
+			</Suspense>
 		</main>
 	);
 }

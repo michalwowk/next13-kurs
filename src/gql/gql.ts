@@ -23,9 +23,10 @@ const documents = {
     "query ProductsGetList($first: Int, $skip: Int) {\n  products(first: $first, skip: $skip) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListDocument,
     "query ProductsGetListByCategorySlug($categorySlug: String!, $first: Int, $skip: Int) {\n  products(\n    where: {categories_some: {slug: $categorySlug}}\n    first: $first\n    skip: $skip\n  ) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListByCategorySlugDocument,
     "query ProductsGetListByCollectionSlug($collectionSlug: String!, $first: Int, $skip: Int) {\n  products(\n    where: {collections_some: {slug: $collectionSlug}}\n    first: $first\n    skip: $skip\n  ) {\n    ...ProductListItem\n  }\n}": types.ProductsGetListByCollectionSlugDocument,
+    "query ProductsGetSuggestedList($collectionSlug: String, $categorySlug: String, $id: ID!) {\n  products(\n    where: {collections_some: {slug_contains: $collectionSlug}, OR: {categories_some: {slug_contains: $categorySlug}, id_not: $id}}\n  ) {\n    ...ProductListItem\n  }\n}": types.ProductsGetSuggestedListDocument,
     "query ProductsGetTotalCount {\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetTotalCountDocument,
     "query ProductsGetTotalCountByCategorySlug($categorySlug: String) {\n  productsConnection(where: {categories_some: {slug: $categorySlug}}) {\n    aggregate {\n      count\n    }\n  }\n}": types.ProductsGetTotalCountByCategorySlugDocument,
-    "query SingleProductGetItemById($id: ID!) {\n  product(where: {id: $id}) {\n    id\n    name\n    price\n    categories(first: 1) {\n      name\n    }\n    images(first: 1) {\n      url\n    }\n    description\n  }\n}": types.SingleProductGetItemByIdDocument,
+    "query SingleProductGetItemById($id: ID!) {\n  product(where: {id: $id}) {\n    id\n    name\n    price\n    collections(first: 1) {\n      name\n      slug\n    }\n    categories(first: 1) {\n      name\n      slug\n    }\n    images(first: 1) {\n      url\n    }\n    description\n  }\n}": types.SingleProductGetItemByIdDocument,
 };
 
 /**
@@ -67,6 +68,10 @@ export function graphql(source: "query ProductsGetListByCollectionSlug($collecti
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "query ProductsGetSuggestedList($collectionSlug: String, $categorySlug: String, $id: ID!) {\n  products(\n    where: {collections_some: {slug_contains: $collectionSlug}, OR: {categories_some: {slug_contains: $categorySlug}, id_not: $id}}\n  ) {\n    ...ProductListItem\n  }\n}"): typeof import('./graphql').ProductsGetSuggestedListDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "query ProductsGetTotalCount {\n  productsConnection {\n    aggregate {\n      count\n    }\n  }\n}"): typeof import('./graphql').ProductsGetTotalCountDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -75,7 +80,7 @@ export function graphql(source: "query ProductsGetTotalCountByCategorySlug($cate
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "query SingleProductGetItemById($id: ID!) {\n  product(where: {id: $id}) {\n    id\n    name\n    price\n    categories(first: 1) {\n      name\n    }\n    images(first: 1) {\n      url\n    }\n    description\n  }\n}"): typeof import('./graphql').SingleProductGetItemByIdDocument;
+export function graphql(source: "query SingleProductGetItemById($id: ID!) {\n  product(where: {id: $id}) {\n    id\n    name\n    price\n    collections(first: 1) {\n      name\n      slug\n    }\n    categories(first: 1) {\n      name\n      slug\n    }\n    images(first: 1) {\n      url\n    }\n    description\n  }\n}"): typeof import('./graphql').SingleProductGetItemByIdDocument;
 
 
 export function graphql(source: string) {

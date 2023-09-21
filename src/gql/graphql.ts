@@ -10799,6 +10799,15 @@ export type ProductsGetListByCollectionSlugQueryVariables = Exact<{
 
 export type ProductsGetListByCollectionSlugQuery = { products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> };
 
+export type ProductsGetSuggestedListQueryVariables = Exact<{
+  collectionSlug?: InputMaybe<Scalars['String']['input']>;
+  categorySlug?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type ProductsGetSuggestedListQuery = { products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> };
+
 export type ProductsGetTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -10816,7 +10825,7 @@ export type SingleProductGetItemByIdQueryVariables = Exact<{
 }>;
 
 
-export type SingleProductGetItemByIdQuery = { product?: { id: string, name: string, price: number, description: string, categories: Array<{ name: string }>, images: Array<{ url: string }> } | null };
+export type SingleProductGetItemByIdQuery = { product?: { id: string, name: string, price: number, description: string, collections: Array<{ name: string, slug: string }>, categories: Array<{ name: string, slug: string }>, images: Array<{ url: string }> } | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -10969,6 +10978,25 @@ export const ProductsGetListByCollectionSlugDocument = new TypedDocumentString(`
   }
   price
 }`) as unknown as TypedDocumentString<ProductsGetListByCollectionSlugQuery, ProductsGetListByCollectionSlugQueryVariables>;
+export const ProductsGetSuggestedListDocument = new TypedDocumentString(`
+    query ProductsGetSuggestedList($collectionSlug: String, $categorySlug: String, $id: ID!) {
+  products(
+    where: {collections_some: {slug_contains: $collectionSlug}, OR: {categories_some: {slug_contains: $categorySlug}, id_not: $id}}
+  ) {
+    ...ProductListItem
+  }
+}
+    fragment ProductListItem on Product {
+  id
+  name
+  categories(first: 1) {
+    name
+  }
+  images(first: 1) {
+    url
+  }
+  price
+}`) as unknown as TypedDocumentString<ProductsGetSuggestedListQuery, ProductsGetSuggestedListQueryVariables>;
 export const ProductsGetTotalCountDocument = new TypedDocumentString(`
     query ProductsGetTotalCount {
   productsConnection {
@@ -10993,8 +11021,13 @@ export const SingleProductGetItemByIdDocument = new TypedDocumentString(`
     id
     name
     price
+    collections(first: 1) {
+      name
+      slug
+    }
     categories(first: 1) {
       name
+      slug
     }
     images(first: 1) {
       url
