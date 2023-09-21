@@ -52,6 +52,7 @@ export type Asset = Node & {
   /** The unique identifier */
   id: Scalars['ID']['output'];
   imageCategory: Array<Category>;
+  imageCollection: Array<Collection>;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -119,6 +120,20 @@ export type AssetImageCategoryArgs = {
   orderBy?: InputMaybe<CategoryOrderByInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CategoryWhereInput>;
+};
+
+
+/** Asset system model */
+export type AssetImageCollectionArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
+  orderBy?: InputMaybe<CollectionOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<CollectionWhereInput>;
 };
 
 
@@ -209,6 +224,7 @@ export type AssetCreateInput = {
   handle: Scalars['String']['input'];
   height?: InputMaybe<Scalars['Float']['input']>;
   imageCategory?: InputMaybe<CategoryCreateManyInlineInput>;
+  imageCollection?: InputMaybe<CollectionCreateManyInlineInput>;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<AssetCreateLocalizationsInput>;
   mimeType?: InputMaybe<Scalars['String']['input']>;
@@ -313,6 +329,9 @@ export type AssetManyWhereInput = {
   imageCategory_every?: InputMaybe<CategoryWhereInput>;
   imageCategory_none?: InputMaybe<CategoryWhereInput>;
   imageCategory_some?: InputMaybe<CategoryWhereInput>;
+  imageCollection_every?: InputMaybe<CollectionWhereInput>;
+  imageCollection_none?: InputMaybe<CollectionWhereInput>;
+  imageCollection_some?: InputMaybe<CollectionWhereInput>;
   productImages_every?: InputMaybe<ProductWhereInput>;
   productImages_none?: InputMaybe<ProductWhereInput>;
   productImages_some?: InputMaybe<ProductWhereInput>;
@@ -388,6 +407,7 @@ export type AssetUpdateInput = {
   handle?: InputMaybe<Scalars['String']['input']>;
   height?: InputMaybe<Scalars['Float']['input']>;
   imageCategory?: InputMaybe<CategoryUpdateManyInlineInput>;
+  imageCollection?: InputMaybe<CollectionUpdateManyInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<AssetUpdateLocalizationsInput>;
   mimeType?: InputMaybe<Scalars['String']['input']>;
@@ -624,6 +644,9 @@ export type AssetWhereInput = {
   imageCategory_every?: InputMaybe<CategoryWhereInput>;
   imageCategory_none?: InputMaybe<CategoryWhereInput>;
   imageCategory_some?: InputMaybe<CategoryWhereInput>;
+  imageCollection_every?: InputMaybe<CollectionWhereInput>;
+  imageCollection_none?: InputMaybe<CollectionWhereInput>;
+  imageCollection_some?: InputMaybe<CollectionWhereInput>;
   mimeType?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   mimeType_contains?: InputMaybe<Scalars['String']['input']>;
@@ -750,7 +773,6 @@ export type Category = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
-  /** Add category thumnail */
   image?: Maybe<Asset>;
   /** System Locale field */
   locale: Locale;
@@ -1350,6 +1372,7 @@ export type Collection = Node & {
   history: Array<Version>;
   /** The unique identifier */
   id: Scalars['ID']['output'];
+  image: Asset;
   /** System Locale field */
   locale: Locale;
   /** Get the other localizations for this document */
@@ -1397,6 +1420,13 @@ export type CollectionHistoryArgs = {
   limit?: Scalars['Int']['input'];
   skip?: Scalars['Int']['input'];
   stageOverride?: InputMaybe<Stage>;
+};
+
+
+/** Collection of products, e.g. Winter Sale. */
+export type CollectionImageArgs = {
+  forceParentLocale?: InputMaybe<Scalars['Boolean']['input']>;
+  locales?: InputMaybe<Array<Locale>>;
 };
 
 
@@ -1479,6 +1509,7 @@ export type CollectionCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['String']['input']>;
+  image: AssetCreateOneInlineInput;
   /** Inline mutations for managing document localizations excluding the default locale */
   localizations?: InputMaybe<CollectionCreateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -1578,6 +1609,7 @@ export type CollectionManyWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  image?: InputMaybe<AssetWhereInput>;
   products_every?: InputMaybe<ProductWhereInput>;
   products_none?: InputMaybe<ProductWhereInput>;
   products_some?: InputMaybe<ProductWhereInput>;
@@ -1637,6 +1669,7 @@ export type CollectionOrderByInput =
 export type CollectionUpdateInput = {
   /** description input for default locale (en) */
   description?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<AssetUpdateOneInlineInput>;
   /** Manage document localizations */
   localizations?: InputMaybe<CollectionUpdateLocalizationsInput>;
   /** name input for default locale (en) */
@@ -1827,6 +1860,7 @@ export type CollectionWhereInput = {
   id_not_starts_with?: InputMaybe<Scalars['ID']['input']>;
   /** All values starting with the given string. */
   id_starts_with?: InputMaybe<Scalars['ID']['input']>;
+  image?: InputMaybe<AssetWhereInput>;
   name?: InputMaybe<Scalars['String']['input']>;
   /** All values containing the given string. */
   name_contains?: InputMaybe<Scalars['String']['input']>;
@@ -2511,7 +2545,6 @@ export type ImageTransformationInput = {
 
 /** Locale system enumeration */
 export type Locale =
-  | 'de'
   /** System locale */
   | 'en';
 
@@ -4506,7 +4539,7 @@ export type Order = Node & {
   createdBy?: Maybe<User>;
   /** Get the document in other stages */
   documentInStages: Array<Order>;
-  email: Scalars['String']['output'];
+  email?: Maybe<Scalars['String']['output']>;
   /** List of Order versions */
   history: Array<Version>;
   /** The unique identifier */
@@ -4519,7 +4552,7 @@ export type Order = Node & {
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
-  stripeCheckoutId: Scalars['String']['output'];
+  stripeCheckoutId?: Maybe<Scalars['String']['output']>;
   total: Scalars['Int']['output'];
   /** The time the document was updated */
   updatedAt: Scalars['DateTime']['output'];
@@ -4602,9 +4635,9 @@ export type OrderConnection = {
 
 export type OrderCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
-  email: Scalars['String']['input'];
+  email?: InputMaybe<Scalars['String']['input']>;
   orderItems?: InputMaybe<OrderItemCreateManyInlineInput>;
-  stripeCheckoutId: Scalars['String']['input'];
+  stripeCheckoutId?: InputMaybe<Scalars['String']['input']>;
   total: Scalars['Int']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
@@ -8619,7 +8652,7 @@ export type Review = Node & {
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   /** User that last published this document */
   publishedBy?: Maybe<User>;
-  rating?: Maybe<Scalars['Int']['output']>;
+  rating: Scalars['Int']['output'];
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
@@ -8702,7 +8735,7 @@ export type ReviewCreateInput = {
   headline: Scalars['String']['input'];
   name: Scalars['String']['input'];
   product?: InputMaybe<ProductCreateOneInlineInput>;
-  rating?: InputMaybe<Scalars['Int']['input']>;
+  rating: Scalars['Int']['input'];
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
@@ -10724,6 +10757,13 @@ export type CategoriesGetListQuery = { categories: Array<{ id: string, name: str
 
 export type CategoryListItemFragment = { id: string, name: string, slug: string, image?: { url: string } | null };
 
+export type CollectionsGetListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CollectionsGetListQuery = { collections: Array<{ id: string, name: string, slug: string, image: { url: string } }> };
+
+export type CollectionListItemFragment = { id: string, name: string, slug: string, image: { url: string } };
+
 export type ProductGetByIdQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
@@ -10749,6 +10789,15 @@ export type ProductsGetListByCategorySlugQueryVariables = Exact<{
 
 
 export type ProductsGetListByCategorySlugQuery = { products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> };
+
+export type ProductsGetListByCollectionSlugQueryVariables = Exact<{
+  collectionSlug: Scalars['String']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type ProductsGetListByCollectionSlugQuery = { products: Array<{ id: string, name: string, price: number, categories: Array<{ name: string }>, images: Array<{ url: string }> }> };
 
 export type ProductsGetTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -10793,6 +10842,16 @@ export const CategoryListItemFragmentDoc = new TypedDocumentString(`
   }
 }
     `, {"fragmentName":"CategoryListItem"}) as unknown as TypedDocumentString<CategoryListItemFragment, unknown>;
+export const CollectionListItemFragmentDoc = new TypedDocumentString(`
+    fragment CollectionListItem on Collection {
+  id
+  name
+  slug
+  image {
+    url
+  }
+}
+    `, {"fragmentName":"CollectionListItem"}) as unknown as TypedDocumentString<CollectionListItemFragment, unknown>;
 export const ProductListItemFragmentDoc = new TypedDocumentString(`
     fragment ProductListItem on Product {
   id
@@ -10820,6 +10879,20 @@ export const CategoriesGetListDocument = new TypedDocumentString(`
     url
   }
 }`) as unknown as TypedDocumentString<CategoriesGetListQuery, CategoriesGetListQueryVariables>;
+export const CollectionsGetListDocument = new TypedDocumentString(`
+    query CollectionsGetList {
+  collections {
+    ...CollectionListItem
+  }
+}
+    fragment CollectionListItem on Collection {
+  id
+  name
+  slug
+  image {
+    url
+  }
+}`) as unknown as TypedDocumentString<CollectionsGetListQuery, CollectionsGetListQueryVariables>;
 export const ProductGetByIdDocument = new TypedDocumentString(`
     query ProductGetById($id: ID!) {
   product(where: {id: $id}) {
@@ -10875,6 +10948,27 @@ export const ProductsGetListByCategorySlugDocument = new TypedDocumentString(`
   }
   price
 }`) as unknown as TypedDocumentString<ProductsGetListByCategorySlugQuery, ProductsGetListByCategorySlugQueryVariables>;
+export const ProductsGetListByCollectionSlugDocument = new TypedDocumentString(`
+    query ProductsGetListByCollectionSlug($collectionSlug: String!, $first: Int, $skip: Int) {
+  products(
+    where: {collections_some: {slug: $collectionSlug}}
+    first: $first
+    skip: $skip
+  ) {
+    ...ProductListItem
+  }
+}
+    fragment ProductListItem on Product {
+  id
+  name
+  categories(first: 1) {
+    name
+  }
+  images(first: 1) {
+    url
+  }
+  price
+}`) as unknown as TypedDocumentString<ProductsGetListByCollectionSlugQuery, ProductsGetListByCollectionSlugQueryVariables>;
 export const ProductsGetTotalCountDocument = new TypedDocumentString(`
     query ProductsGetTotalCount {
   productsConnection {

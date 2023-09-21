@@ -25,6 +25,12 @@ export const TopNavbar = () => {
 							Categories
 						</ActiveLink>
 					</li>
+
+					<li>
+						<ActiveLink className="font-semibold" href="/collections" activeClassName="underline">
+							Collections
+						</ActiveLink>
+					</li>
 				</ul>
 				<div></div>
 			</div>

@@ -1,16 +1,18 @@
 import NextImage from "next/image";
+import { type Route } from "next";
 import { type CategoryListItemFragment } from "@/gql/graphql";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
 import { Skeleton } from "@/ui/atoms/Skeleton";
 
 type CategoryListItemProps = {
 	category: CategoryListItemFragment;
+	route: string;
 };
 
-export const CategoryListItem = ({ category }: CategoryListItemProps) => {
+export const CategoryListItem = ({ category, route }: CategoryListItemProps) => {
 	return (
 		<li>
-			<ActiveLink href={`/categories/${category.slug}`}>
+			<ActiveLink href={`${route}/${category.slug}` as Route}>
 				<article>
 					{category.image?.url ? (
 						<NextImage

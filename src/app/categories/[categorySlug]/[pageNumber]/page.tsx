@@ -4,7 +4,6 @@ import { executeGraphql } from "@/api/utils";
 import { ProductsPagination } from "@/ui/molecules/ProductsPagination";
 import { ProductList } from "@/ui/organisms/ProductList";
 import {
-	type ProductListItemFragment,
 	ProductsGetListByCategorySlugDocument,
 	ProductsGetTotalCountByCategorySlugDocument,
 } from "@/gql/graphql";
