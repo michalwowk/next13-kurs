@@ -28,7 +28,7 @@ export const SuggestedProducts = async ({
 			<h2 className="text-xl font-bold">Suggested Products</h2>
 			<ul
 				className="mt-8 grid gap-8 sm:grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
-				data-testid="products-list"
+				data-testid="related-products"
 			>
 				{products.map((product) => {
 					return <ProductListItem key={product.id} product={product} />;

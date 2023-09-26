@@ -1,5 +1,6 @@
 query ProductsGetSuggestedList($collectionSlug: String, $categorySlug: String, $id: ID!) {
 	products(
+		first: 4
 		where: {
 			collections_some: { slug_contains: $collectionSlug }
 			OR: { categories_some: { slug_contains: $categorySlug }, id_not: $id }

@@ -1,6 +1,7 @@
 import { Shirt } from "lucide-react";
 import Link from "next/link";
 import { ActiveLink } from "@/ui/atoms/ActiveLink";
+import { Search } from "@/ui/molecules/Search";
 
 export const TopNavbar = () => {
 	return (
@@ -32,7 +33,9 @@ export const TopNavbar = () => {
 						</ActiveLink>
 					</li>
 				</ul>
-				<div></div>
+				<div>
+					<Search />
+				</div>
 			</div>
 		</nav>
 	);
