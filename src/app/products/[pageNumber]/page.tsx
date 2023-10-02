@@ -1,13 +1,11 @@
 import { PRODUCTS_PER_PAGE } from "../../../constants";
 import { getTotalNumberOfPages } from "../../../utils";
-import { executeGraphql } from "@/api/utils";
 import { ProductsPagination } from "@/ui/molecules/ProductsPagination";
 import { ProductList } from "@/ui/organisms/ProductList";
-import { ProductsGetListDocument, ProductsGetTotalCountDocument } from "@/gql/graphql";
+import { getProductsList, getTotalAmountOfProducts } from "@/api/products";
 
 export async function generateStaticParams() {
-	const { productsConnection } = await executeGraphql(ProductsGetTotalCountDocument);
-	const totalAmountOfProducts = productsConnection.aggregate.count;
+	const totalAmountOfProducts = await getTotalAmountOfProducts();
 
 	const totalNumberOfPages = getTotalNumberOfPages(totalAmountOfProducts, PRODUCTS_PER_PAGE);
 
@@ -27,12 +25,12 @@ export default async function PaginatedProductsPage({
 }) {
 	const firstProductPointer = (Number(pageNumber) - 1) * PRODUCTS_PER_PAGE;
 
-	const { products } = await executeGraphql(ProductsGetListDocument, {
+	const { products } = await getProductsList({
 		first: PRODUCTS_PER_PAGE,
 		skip: firstProductPointer,
 	});
-	const { productsConnection } = await executeGraphql(ProductsGetTotalCountDocument);
-	const totalAmountOfProducts = productsConnection.aggregate.count;
+
+	const totalAmountOfProducts = await getTotalAmountOfProducts();
 
 	const totalNumberOfPages = getTotalNumberOfPages(totalAmountOfProducts, PRODUCTS_PER_PAGE);
 

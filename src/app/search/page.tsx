@@ -1,5 +1,4 @@
-import { executeGraphql } from "@/api/utils";
-import { ProductsGetListByNameOrCategoryNameDocument } from "@/gql/graphql";
+import { getSearchProducts } from "@/api/products";
 import { ProductList } from "@/ui/organisms/ProductList";
 
 type SearchPageProps = {
@@ -10,9 +9,7 @@ type SearchPageProps = {
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
 	const query = searchParams.query;
-	const { products } = await executeGraphql(ProductsGetListByNameOrCategoryNameDocument, {
-		query,
-	});
+	const { products } = await getSearchProducts(query);
 	return (
 		<main>
 			<section className="mx-auto max-w-md p-12 sm:max-w-2xl lg:max-w-6xl">

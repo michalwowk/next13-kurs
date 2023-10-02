@@ -1,9 +1,8 @@
-import { executeGraphql } from "@/api/utils";
-import { CollectionsGetListDocument } from "@/gql/graphql";
+import { getAllCollectionList } from "@/api/collection";
 import { CategoryListItem } from "@/ui/molecules/CategoryListItem";
 
 export default async function PaginatedProductsPage() {
-	const { collections } = await executeGraphql(CollectionsGetListDocument);
+	const { collections } = await getAllCollectionList();
 
 	return (
 		<main className="container mx-auto">

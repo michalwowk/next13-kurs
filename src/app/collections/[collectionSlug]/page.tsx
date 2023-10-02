@@ -1,15 +1,12 @@
-import { executeGraphql } from "@/api/utils";
 import { ProductList } from "@/ui/organisms/ProductList";
-import { ProductsGetListByCollectionSlugDocument } from "@/gql/graphql";
+import { getProductsListByCollectionSlug } from "@/api/products";
 
 export default async function PaginatedProductsPage({
 	params: { collectionSlug },
 }: {
 	params: { collectionSlug: string };
 }) {
-	const { products } = await executeGraphql(ProductsGetListByCollectionSlugDocument, {
-		collectionSlug,
-	});
+	const { products } = await getProductsListByCollectionSlug(collectionSlug);
 
 	return (
 		<main>

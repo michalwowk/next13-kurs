@@ -26,7 +26,8 @@
 		"paths": {
 			"@/*": ["./src/app/*"],
 			"@/api/*": ["./src/api/*"],
-			"@/gql/*": ["./src/gql/*"]
+			"@/gql/*": ["./src/gql/*"],
+			"@/constants": ["./constants.ts"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

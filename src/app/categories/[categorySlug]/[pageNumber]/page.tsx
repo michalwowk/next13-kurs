@@ -1,22 +1,19 @@
 import { PRODUCTS_PER_PAGE } from "../../../../constants";
 import { getTotalNumberOfPages } from "../../../../utils";
-import { executeGraphql } from "@/api/utils";
 import { ProductsPagination } from "@/ui/molecules/ProductsPagination";
 import { ProductList } from "@/ui/organisms/ProductList";
 import {
-	ProductsGetListByCategorySlugDocument,
-	ProductsGetTotalCountByCategorySlugDocument,
-} from "@/gql/graphql";
+	getProductsListByCategorySlug,
+	getTotalAmountOfProductsByCategorySlug,
+} from "@/api/products";
 
 export async function generateStaticParams({
 	params: { categorySlug },
 }: {
 	params: { pageNumber: string; categorySlug: string };
 }) {
-	const { productsConnection } = await executeGraphql(ProductsGetTotalCountByCategorySlugDocument, {
-		categorySlug,
-	});
-	const totalAmountOfProducts = productsConnection.aggregate.count;
+	const totalAmountOfProducts = await getTotalAmountOfProductsByCategorySlug(categorySlug);
+
 	const totalNumberOfPages = getTotalNumberOfPages(totalAmountOfProducts, PRODUCTS_PER_PAGE);
 	const arrayOfPageNumbers = Array.from({ length: totalNumberOfPages }, (_, i) => i);
 
@@ -34,16 +31,13 @@ export default async function PaginatedProductsPage({
 }) {
 	const firstProductPointer = (Number(pageNumber) - 1) * PRODUCTS_PER_PAGE;
 
-	const { products } = await executeGraphql(ProductsGetListByCategorySlugDocument, {
+	const { products } = await getProductsListByCategorySlug({
 		categorySlug,
 		first: PRODUCTS_PER_PAGE,
 		skip: firstProductPointer,
 	});
-	const { productsConnection } = await executeGraphql(ProductsGetTotalCountByCategorySlugDocument, {
-		categorySlug,
-	});
 
-	const totalAmountOfProducts = productsConnection.aggregate.count;
+	const totalAmountOfProducts = await getTotalAmountOfProductsByCategorySlug(categorySlug);
 
 	const totalNumberOfPages = getTotalNumberOfPages(totalAmountOfProducts, PRODUCTS_PER_PAGE);
 

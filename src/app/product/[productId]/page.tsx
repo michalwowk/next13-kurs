@@ -2,21 +2,18 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import NextImage from "next/image";
 import { Suspense } from "react";
-import { executeGraphql } from "../../../api/utils";
 
 import { formatMoney } from "../../../utils";
-import { SingleProductGetItemByIdDocument } from "@/gql/graphql";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 import { Skeleton } from "@/ui/atoms/Skeleton";
+import { getSingleProductById } from "@/api/product";
 
 export async function generateMetadata({
 	params,
 }: {
 	params: { productId: string };
 }): Promise<Metadata> {
-	const { product } = await executeGraphql(SingleProductGetItemByIdDocument, {
-		id: params.productId,
-	});
+	const { product } = await getSingleProductById(params.productId);
 
 	if (!product) {
 		notFound();
@@ -39,9 +36,7 @@ export async function generateMetadata({
 }
 
 export default async function ProductPage({ params }: { params: { productId: string } }) {
-	const { product } = await executeGraphql(SingleProductGetItemByIdDocument, {
-		id: params.productId,
-	});
+	const { product } = await getSingleProductById(params.productId);
 
 	if (!product) {
 		notFound();

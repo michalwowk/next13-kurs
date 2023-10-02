@@ -1,5 +1,4 @@
-import { executeGraphql } from "@/api/utils";
-import { ProductsGetSuggestedListDocument } from "@/gql/graphql";
+import { getSuggestedProductsList } from "@/api/products";
 import { ProductListItem } from "@/ui/molecules/ProductListItem";
 
 type SuggestedProductsProps = {
@@ -13,7 +12,7 @@ export const SuggestedProducts = async ({
 	categorySlug,
 	currentProductId,
 }: SuggestedProductsProps) => {
-	const { products } = await executeGraphql(ProductsGetSuggestedListDocument, {
+	const { products } = await getSuggestedProductsList({
 		id: currentProductId,
 		collectionSlug,
 		categorySlug,
