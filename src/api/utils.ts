@@ -26,12 +26,16 @@ export async function executeGraphQl<TResult, TVariables>({
 		body: JSON.stringify({
 			query,
 			variables,
+			next: {
+				tags: ["cart"],
+			},
 		}),
 		cache,
 		next,
 		headers: {
 			...headers,
 			"Content-Type": "application/json",
+			Authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
 		},
 	});
 

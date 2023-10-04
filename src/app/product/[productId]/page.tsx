@@ -1,12 +1,15 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import NextImage from "next/image";
-import { Suspense } from "react";
+// import { Suspense } from "react";
 
+import { revalidateTag } from "next/cache";
 import { formatMoney } from "../../../utils";
-import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
-import { Skeleton } from "@/ui/atoms/Skeleton";
+// import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
+// import { Skeleton } from "@/ui/atoms/Skeleton";
 import { getSingleProductById } from "@/api/product";
+import { AddToCartButton } from "@/ui/molecules/AddToCartButton";
+import { addProductToCart, getOrCreateCart } from "@/api/cart";
 
 export async function generateMetadata({
 	params,
@@ -42,6 +45,14 @@ export default async function ProductPage({ params }: { params: { productId: str
 		notFound();
 	}
 
+	async function addToCartAction() {
+		"use server";
+		const cart = await getOrCreateCart();
+		await addProductToCart(cart.id, params.productId);
+
+		revalidateTag("cart");
+	}
+
 	return (
 		<main className="container mx-auto ">
 			<div className="mt-5 flex items-center justify-center">
@@ -54,16 +65,19 @@ export default async function ProductPage({ params }: { params: { productId: str
 							<span className="sr-only">Cena:</span> {formatMoney(product.price / 100)}
 						</span>
 					</div>
+					<form action={addToCartAction}>
+						<AddToCartButton />
+					</form>
 				</div>
 			</div>
 
-			<Suspense fallback={<Skeleton className="h-20 w-full" />}>
+			{/* <Suspense fallback={<Skeleton className="h-20 w-full" />}>
 				<SuggestedProducts
 					currentProductId={product.id}
 					categorySlug={product.categories[0]?.slug}
 					collectionSlug={product.collections[0]?.slug}
 				/>
-			</Suspense>
+			</Suspense> */}
 		</main>
 	);
 }

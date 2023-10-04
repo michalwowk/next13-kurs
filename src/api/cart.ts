@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 import { executeGraphQl } from "@/api/utils";
 import {
 	CartGetByIdDocument,
@@ -45,6 +46,8 @@ export async function addProductToCart(cartId: string, productId: string) {
 			total: product.price,
 		},
 	});
+
+	revalidateTag("cart");
 }
 
 export async function getCartById(cartId: string) {
