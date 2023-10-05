@@ -23,6 +23,7 @@ export default async function CartPage() {
 			<section className="mt-5">
 				<div>
 					<h1>Order #{order.id} summary</h1>
+					<p>Nice choice!</p>
 					<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 						<table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
 							<thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
