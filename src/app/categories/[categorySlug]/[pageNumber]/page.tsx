@@ -7,23 +7,6 @@ import {
 	getTotalAmountOfProductsByCategorySlug,
 } from "@/api/products";
 
-export async function generateStaticParams({
-	params: { categorySlug },
-}: {
-	params: { pageNumber: string; categorySlug: string };
-}) {
-	const totalAmountOfProducts = await getTotalAmountOfProductsByCategorySlug(categorySlug);
-
-	const totalNumberOfPages = getTotalNumberOfPages(totalAmountOfProducts, PRODUCTS_PER_PAGE);
-	const arrayOfPageNumbers = Array.from({ length: totalNumberOfPages }, (_, i) => i);
-
-	return arrayOfPageNumbers.map((pageNumber) => {
-		return {
-			pageNumber: String(pageNumber + 1),
-		};
-	});
-}
-
 export default async function PaginatedProductsPage({
 	params: { pageNumber, categorySlug },
 }: {
