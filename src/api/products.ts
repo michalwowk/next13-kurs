@@ -52,9 +52,6 @@ export async function getProductsList({ first, skip }: { first: number; skip: nu
 			first,
 			skip,
 		},
-		next: {
-			revalidate: 60 * 60 * 24,
-		},
 	});
 }
 
