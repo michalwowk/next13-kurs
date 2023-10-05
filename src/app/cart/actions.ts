@@ -1,7 +1,7 @@
 "use server";
 
 import { executeGraphQl } from "@/api/utils";
-import { CartChangeItemQuantityDocument } from "@/gql/graphql";
+import { CartChangeItemQuantityDocument, CartRemoveItemDocument } from "@/gql/graphql";
 
 export const changeItemQuantity = (itemId: string, quantity: number) => {
 	return executeGraphQl({
@@ -12,3 +12,12 @@ export const changeItemQuantity = (itemId: string, quantity: number) => {
 		},
 	});
 };
+
+export async function removeItemFromCartById(itemId: string) {
+	return executeGraphQl({
+		query: CartRemoveItemDocument,
+		variables: {
+			itemId,
+		},
+	});
+}

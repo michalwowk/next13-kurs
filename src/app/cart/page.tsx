@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { formatMoney } from "../../utils";
 import { ChangeQuantity } from "@/cart/ChangeQuntity";
 import { getCartById } from "@/api/cart";
+import { RemoveButton } from "@/cart/RemoveButton";
 
 export default async function CartPage() {
 	const cartId = cookies().get("cartId")?.value;
@@ -35,6 +36,7 @@ export default async function CartPage() {
 									<th scope="col" className="px-6 py-3">
 										Price
 									</th>
+									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -46,12 +48,16 @@ export default async function CartPage() {
 										<tr
 											className="dark:bg-slate- border-b bg-white dark:border-gray-700"
 											key={item.product.id}
+											data-key={item.product.id}
 										>
 											<td className="px-6 py-4">{item.product.name}</td>
 											<td className="px-6 py-4">
 												<ChangeQuantity itemId={item.id} quantity={item.quantity} />
 											</td>
 											<td className="px-6 py-4">{formatMoney(item.product.price / 100)}</td>
+											<td className="px-4 py-2">
+												<RemoveButton productId={item.id} />
+											</td>
 										</tr>
 									);
 								})}

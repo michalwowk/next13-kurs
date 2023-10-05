@@ -1,5 +1,5 @@
 query ProductsGetListByNameOrCategoryName($query: String!) {
-	products(where: { name_contains: $query, OR: { categories_some: { name_contains: $query } } }) {
+	products(where: { name_contains: $query }) {
 		...ProductListItem
 	}
 }

@@ -10757,7 +10757,7 @@ export type CartAddItemMutationVariables = Exact<{
 }>;
 
 
-export type CartAddItemMutation = { createOrderItem?: { id: string } | null };
+export type CartAddItemMutation = { upsertOrderItem?: { id: string, quantity: number, product?: { name: string } | null } | null };
 
 export type CartChangeItemQuantityMutationVariables = Exact<{
   quantity: Scalars['Int']['input'];
@@ -10919,10 +10919,15 @@ export const ProductListItemFragmentDoc = new TypedDocumentString(`
     `, {"fragmentName":"ProductListItem"}) as unknown as TypedDocumentString<ProductListItemFragment, unknown>;
 export const CartAddItemDocument = new TypedDocumentString(`
     mutation CartAddItem($cartId: ID!, $productId: ID!, $total: Int!) {
-  createOrderItem(
-    data: {quantity: 1, total: $total, order: {connect: {id: $cartId}}, product: {connect: {id: $productId}}}
+  upsertOrderItem(
+    upsert: {create: {quantity: 1, total: $total, order: {connect: {id: $cartId}}, product: {connect: {id: $productId}}}, update: {total: 999, quantity: 2, order: {connect: {id: $cartId}}, product: {connect: {id: $productId}}}}
+    where: {id: $cartId}
   ) {
     id
+    quantity
+    product {
+      name
+    }
   }
 }
     `) as unknown as TypedDocumentString<CartAddItemMutation, CartAddItemMutationVariables>;
@@ -11078,9 +11083,7 @@ export const ProductsGetListByCollectionSlugDocument = new TypedDocumentString(`
 }`) as unknown as TypedDocumentString<ProductsGetListByCollectionSlugQuery, ProductsGetListByCollectionSlugQueryVariables>;
 export const ProductsGetListByNameOrCategoryNameDocument = new TypedDocumentString(`
     query ProductsGetListByNameOrCategoryName($query: String!) {
-  products(
-    where: {name_contains: $query, OR: {categories_some: {name_contains: $query}}}
-  ) {
+  products(where: {name_contains: $query}) {
     ...ProductListItem
   }
 }

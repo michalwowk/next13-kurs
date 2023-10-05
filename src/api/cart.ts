@@ -13,6 +13,7 @@ export async function getOrCreateCart() {
 	if (cartId) {
 		const { order: cart } = await executeGraphQl({
 			query: CartGetByIdDocument,
+			cache: "no-store",
 			variables: { id: cartId },
 		});
 		if (cart) {
@@ -33,7 +34,9 @@ export async function addProductToCart(cartId: string, productId: string) {
 	const { product } = await executeGraphQl({
 		query: ProductGetByIdDocument,
 		variables: { id: productId },
+		cache: "no-store",
 	});
+
 	if (!product) {
 		throw new Error(`Product with id ${productId} not found`);
 	}
@@ -46,6 +49,8 @@ export async function addProductToCart(cartId: string, productId: string) {
 			total: product.price,
 		},
 	});
+
+	console.log(cartId, productId);
 
 	revalidateTag("cart");
 }

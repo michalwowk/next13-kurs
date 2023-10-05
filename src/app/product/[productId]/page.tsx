@@ -1,15 +1,13 @@
 import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import NextImage from "next/image";
-// import { Suspense } from "react";
 
 import { revalidateTag } from "next/cache";
 import { formatMoney } from "../../../utils";
-// import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
-// import { Skeleton } from "@/ui/atoms/Skeleton";
 import { getSingleProductById } from "@/api/product";
 import { AddToCartButton } from "@/ui/molecules/AddToCartButton";
 import { addProductToCart, getOrCreateCart } from "@/api/cart";
+import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
 
 export async function generateMetadata({
 	params,
@@ -71,13 +69,11 @@ export default async function ProductPage({ params }: { params: { productId: str
 				</div>
 			</div>
 
-			{/* <Suspense fallback={<Skeleton className="h-20 w-full" />}>
-				<SuggestedProducts
-					currentProductId={product.id}
-					categorySlug={product.categories[0]?.slug}
-					collectionSlug={product.collections[0]?.slug}
-				/>
-			</Suspense> */}
+			<SuggestedProducts
+				currentProductId={product.id}
+				categorySlug={product.categories[0]?.slug}
+				collectionSlug={product.collections[0]?.slug}
+			/>
 		</main>
 	);
 }
