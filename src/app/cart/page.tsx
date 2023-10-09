@@ -37,6 +37,9 @@ export default async function CartPage() {
 									<th scope="col" className="px-6 py-3">
 										Price
 									</th>
+									<th scope="col" className="px-6 py-3">
+										Total Price
+									</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -56,6 +59,7 @@ export default async function CartPage() {
 												<ChangeQuantity itemId={item.id} quantity={item.quantity} />
 											</td>
 											<td className="px-6 py-4">{formatMoney(item.product.price / 100)}</td>
+											<td className="px-6 py-4">{formatMoney(item.total / 100)}</td>
 											<td className="px-4 py-2">
 												<RemoveButton productId={item.id} />
 											</td>

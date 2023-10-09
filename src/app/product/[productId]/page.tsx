@@ -2,12 +2,14 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import NextImage from "next/image";
 
-import { revalidateTag } from "next/cache";
 import { formatMoney } from "../../../utils";
 import { getSingleProductById } from "@/api/product";
 import { AddToCartButton } from "@/ui/molecules/AddToCartButton";
 import { addProductToCart, getOrCreateCart } from "@/api/cart";
 import { SuggestedProducts } from "@/ui/organisms/SuggestedProducts";
+import { InputGroup } from "@/ui/atoms/InputGroup";
+import { Label } from "@/ui/atoms/Label";
+import { Input } from "@/ui/atoms/Input";
 
 export async function generateMetadata({
 	params,
@@ -23,16 +25,6 @@ export async function generateMetadata({
 	return {
 		title: product.name,
 		description: product.description,
-		openGraph: {
-			title: `Name: ${product.name}`,
-			description: product.description,
-			images: [
-				{
-					url: product.images[0].url,
-					alt: product.description,
-				},
-			],
-		},
 	};
 }
 
@@ -46,13 +38,22 @@ export default async function ProductPage({ params }: { params: { productId: str
 	async function addToCartAction() {
 		"use server";
 		const cart = await getOrCreateCart();
-		await addProductToCart(cart.id, params.productId);
 
-		revalidateTag("cart");
+		const existingProduct = cart.orderItems.find((item) => item.product?.id === params.productId);
+		const quantity = existingProduct ? existingProduct.quantity + 1 : 1;
+		const totalPrice = existingProduct ? quantity * product.price : product.price;
+
+		await addProductToCart({
+			orderItemId: existingProduct?.id || cart.id,
+			productId: params.productId,
+			total: totalPrice,
+			quantity,
+			orderId: cart.id,
+		});
 	}
 
 	return (
-		<main className="container mx-auto ">
+		<main className="container mx-auto">
 			<div className="mt-5 flex items-center justify-center">
 				<NextImage src={product.images[0].url} alt={product.name} width={500} height={500} />
 				<div className="max-w-lg">
@@ -74,6 +75,36 @@ export default async function ProductPage({ params }: { params: { productId: str
 				categorySlug={product.categories[0]?.slug}
 				collectionSlug={product.collections[0]?.slug}
 			/>
+
+			<section className="max-w-md">
+				<h2>Share you feedback</h2>
+				<form data-testid="add-review-form">
+					<InputGroup>
+						<Label htmlFor="headline">Headline</Label>
+						<Input id="headline" type="text" />
+					</InputGroup>
+
+					<InputGroup>
+						<Label htmlFor="content">content</Label>
+						<Input id="content" type="text" />
+					</InputGroup>
+
+					<InputGroup>
+						<Label htmlFor="rating">rating</Label>
+						<Input id="rating" type="text" />
+					</InputGroup>
+
+					<InputGroup>
+						<Label htmlFor="name">name</Label>
+						<Input id="name" type="text" />
+					</InputGroup>
+
+					<InputGroup>
+						<Label htmlFor="email">email</Label>
+						<Input id="email" type="text" />
+					</InputGroup>
+				</form>
+			</section>
 		</main>
 	);
 }

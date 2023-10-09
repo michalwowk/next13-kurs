@@ -30,7 +30,19 @@ export async function getOrCreateCart() {
 	return newCart;
 }
 
-export async function addProductToCart(cartId: string, productId: string) {
+export async function addProductToCart({
+	orderItemId,
+	productId,
+	total,
+	quantity,
+	orderId,
+}: {
+	orderItemId: string;
+	productId: string;
+	total: number;
+	quantity: number;
+	orderId: string;
+}) {
 	const { product } = await executeGraphQl({
 		query: ProductGetByIdDocument,
 		variables: { id: productId },
@@ -44,13 +56,13 @@ export async function addProductToCart(cartId: string, productId: string) {
 	await executeGraphQl({
 		query: CartAddItemDocument,
 		variables: {
-			cartId,
+			orderItemId,
 			productId,
-			total: product.price,
+			total,
+			quantity,
+			orderId,
 		},
 	});
-
-	console.log(cartId, productId);
 
 	revalidateTag("cart");
 }

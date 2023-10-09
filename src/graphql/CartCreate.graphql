@@ -1,5 +1,14 @@
 mutation CartCreate {
 	createOrder(data: { total: 0 }) {
 		id
+		orderItems {
+			id
+			quantity
+			product {
+				id
+				name
+				price
+			}
+		}
 	}
 }
