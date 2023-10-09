@@ -39,12 +39,12 @@ export default async function ProductPage({ params }: { params: { productId: str
 		"use server";
 		const cart = await getOrCreateCart();
 
-		const existingProduct = cart.orderItems.find((item) => item.product?.id === params.productId);
-		const quantity = existingProduct ? existingProduct.quantity + 1 : 1;
-		const totalPrice = existingProduct ? quantity * product.price : product.price;
+		const existingOrderItem = cart.orderItems.find((item) => item.product?.id === params.productId);
+		const quantity = existingOrderItem ? existingOrderItem.quantity + 1 : 1;
+		const totalPrice = existingOrderItem ? quantity * product.price : product.price;
 
 		await addProductToCart({
-			orderItemId: existingProduct?.id || cart.id,
+			orderItemId: existingOrderItem?.id || cart.id,
 			productId: params.productId,
 			total: totalPrice,
 			quantity,
