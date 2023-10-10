@@ -13,17 +13,30 @@ export const TopNavbar = () => {
 				</Link>
 				<ul className="flex justify-center gap-2 gap-x-6">
 					<li>
-						<ActiveLink className="font-semibold" href="/" exact activeClassName="underline">
+						<ActiveLink
+							className="font-semibold"
+							href="/"
+							exact
+							activeClassName="border-b-2 border-b-slate-600"
+						>
 							Home
 						</ActiveLink>
 					</li>
 					<li>
-						<ActiveLink className="font-semibold" href="/products" activeClassName="underline">
+						<ActiveLink
+							className="font-semibold"
+							href="/products"
+							activeClassName="border-b-2 border-b-slate-600"
+						>
 							All
 						</ActiveLink>
 					</li>
 					<li>
-						<ActiveLink className="font-semibold" href="/categories" activeClassName="underline">
+						<ActiveLink
+							className="font-semibold"
+							href="/categories"
+							activeClassName="border-b-2 border-b-slate-600"
+						>
 							Categories
 						</ActiveLink>
 					</li>
