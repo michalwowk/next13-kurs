@@ -15,8 +15,9 @@ export const Search = () => {
 	const debouncedValue = useDebounce(searchValue);
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === "Enter" && e.currentTarget.value.length > 0) {
-			router.push(`/search?query=${e.currentTarget.value}`);
+		if (e.key === "Enter" && searchValue.length > 0) {
+			e.preventDefault();
+			router.push(`/search?query=${searchValue}`);
 		}
 	};
 
