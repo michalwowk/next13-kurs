@@ -2,7 +2,6 @@ import { type Metadata } from "next";
 import { notFound } from "next/navigation";
 import NextImage from "next/image";
 
-import { Suspense } from "react";
 import { formatMoney } from "../../../utils";
 import { getSingleProductById } from "@/api/product";
 import { AddToCartButton } from "@/ui/molecules/AddToCartButton";
