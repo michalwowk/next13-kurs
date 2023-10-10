@@ -6,12 +6,12 @@ import { TopNavCart } from "@/ui/molecules/TopNavCart";
 
 export const TopNavbar = () => {
 	return (
-		<nav className="border-b-2 py-2">
-			<div className="container mx-auto flex items-center justify-between">
-				<Link href="/">
-					<Shirt />
-				</Link>
-				<ul className="flex justify-center gap-2 gap-x-6">
+		<div className="container mx-auto flex items-center justify-between border-b-2 py-2">
+			<Link href="/">
+				<Shirt />
+			</Link>
+			<nav>
+				<ul className="flex items-center justify-center gap-2 gap-x-6">
 					<li>
 						<ActiveLink
 							className="font-semibold"
@@ -51,11 +51,12 @@ export const TopNavbar = () => {
 						</ActiveLink>
 					</li>
 				</ul>
-				<div>
-					<Search />
-					<TopNavCart />
-				</div>
+			</nav>
+
+			<div className="flex items-center">
+				<Search />
+				<TopNavCart />
 			</div>
-		</nav>
+		</div>
 	);
 };
