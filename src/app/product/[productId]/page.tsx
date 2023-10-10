@@ -44,6 +44,10 @@ export default async function ProductPage({
 		"use server";
 		const cart = await getOrCreateCart();
 
+		if (!product) {
+			return;
+		}
+
 		const existingOrderItem = cart.orderItems.find((item) => item.product?.id === productId);
 		const quantity = existingOrderItem ? existingOrderItem.quantity + 1 : 1;
 		const totalPrice = existingOrderItem ? quantity * product.price : product.price;
