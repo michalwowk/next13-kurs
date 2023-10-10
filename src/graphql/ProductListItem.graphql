@@ -9,3 +9,12 @@ fragment ProductListItem on Product {
 	}
 	price
 }
+
+fragment Review on Review {
+	id
+	headline
+	content
+	rating
+	name
+	email
+}

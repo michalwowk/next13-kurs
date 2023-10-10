@@ -7,5 +7,6 @@ export async function getSingleProductById(id: string) {
 		variables: {
 			id,
 		},
+		next: { tags: ["product"] },
 	});
 }

@@ -15,5 +15,8 @@ query SingleProductGetItemById($id: ID!) {
 			url
 		}
 		description
+		reviews {
+			...Review
+		}
 	}
 }

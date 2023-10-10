@@ -19,6 +19,11 @@ const nextConfig = {
 				destination: "/categories/:categorySlug/1",
 				permanent: true,
 			},
+			{
+				source: "/collections/:collectionSlug",
+				destination: "/collections/:collectionSlug/1",
+				permanent: true,
+			},
 		];
 	},
 };

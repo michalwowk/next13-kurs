@@ -1,22 +1,8 @@
 import { getSuggestedProductsList } from "@/api/products";
 import { ProductListItem } from "@/ui/molecules/ProductListItem";
 
-type SuggestedProductsProps = {
-	collectionSlug?: string;
-	categorySlug?: string;
-	currentProductId: string;
-};
-
-export const SuggestedProducts = async ({
-	collectionSlug,
-	categorySlug,
-	currentProductId,
-}: SuggestedProductsProps) => {
-	const { products } = await getSuggestedProductsList({
-		id: currentProductId,
-		collectionSlug,
-		categorySlug,
-	});
+export const SuggestedProducts = async () => {
+	const { products } = await getSuggestedProductsList();
 
 	if (!products.length) {
 		return null;

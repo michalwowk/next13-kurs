@@ -9,23 +9,8 @@ import {
 	ProductsGetTotalCountDocument,
 } from "@/gql/graphql";
 
-export async function getSuggestedProductsList({
-	id,
-	collectionSlug,
-	categorySlug,
-}: {
-	id: string;
-	collectionSlug?: string;
-	categorySlug?: string;
-}) {
-	return executeGraphQl({
-		query: ProductsGetSuggestedListDocument,
-		variables: {
-			id,
-			collectionSlug,
-			categorySlug,
-		},
-	});
+export async function getSuggestedProductsList() {
+	return executeGraphQl({ query: ProductsGetSuggestedListDocument });
 }
 
 export async function getSearchProducts(query: string) {
