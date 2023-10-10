@@ -14,6 +14,12 @@ export const Search = () => {
 	const [searchValue, setSearchValue] = useState(query || "");
 	const debouncedValue = useDebounce(searchValue);
 
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter" && e.currentTarget.value.length > 0) {
+			router.push(`/search?query=${e.currentTarget.value}`);
+		}
+	};
+
 	useEffect(() => {
 		if (!debouncedValue) return;
 		router.push(`/search?query=${debouncedValue}`);
@@ -27,6 +33,7 @@ export const Search = () => {
 				type="search"
 				value={searchValue}
 				onChange={(e) => setSearchValue(e.target.value)}
+				onKeyDown={handleKeyDown}
 			/>
 		</form>
 	);
