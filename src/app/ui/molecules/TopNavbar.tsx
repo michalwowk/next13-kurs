@@ -31,15 +31,6 @@ export const TopNavbar = () => {
 							All
 						</ActiveLink>
 					</li>
-					<li>
-						<ActiveLink
-							className="font-semibold"
-							href="/categories"
-							activeClassName="border-b-2 border-b-slate-600"
-						>
-							Categories
-						</ActiveLink>
-					</li>
 
 					<li>
 						<ActiveLink
@@ -48,6 +39,16 @@ export const TopNavbar = () => {
 							activeClassName="border-b-2 border-b-slate-600"
 						>
 							Collections
+						</ActiveLink>
+					</li>
+
+					<li>
+						<ActiveLink
+							className="font-semibold"
+							href="/categories"
+							activeClassName="border-b-2 border-b-slate-600"
+						>
+							Categories
 						</ActiveLink>
 					</li>
 				</ul>
