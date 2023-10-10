@@ -42,7 +42,11 @@ export const TopNavbar = () => {
 					</li>
 
 					<li>
-						<ActiveLink className="font-semibold" href="/collections" activeClassName="underline">
+						<ActiveLink
+							className="font-semibold"
+							href="/collections"
+							activeClassName="border-b-2 border-b-slate-600"
+						>
 							Collections
 						</ActiveLink>
 					</li>
