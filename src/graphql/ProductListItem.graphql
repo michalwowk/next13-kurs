@@ -1,13 +1,14 @@
 fragment ProductListItem on Product {
 	id
 	name
+	averageRating
 	categories(first: 1) {
 		name
 	}
+	price
 	images(first: 1) {
 		url
 	}
-	price
 }
 
 fragment Review on Review {

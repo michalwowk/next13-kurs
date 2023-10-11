@@ -6,7 +6,7 @@ type ProductListItemDescriptionProps = {
 };
 
 export const ProductListItemDescription = ({
-	product: { name, categories, price },
+	product: { name, categories, price, averageRating },
 }: ProductListItemDescriptionProps) => {
 	return (
 		<div className="mt-2 flex justify-between">
@@ -14,13 +14,14 @@ export const ProductListItemDescription = ({
 				<h3 className="text-sm font-semibold text-gray-700">{name}</h3>
 				{categories.length && (
 					<p className="text-sm font-medium text-gray-500">
-						<span className="sr-only">Kategoria:</span> {categories[0].name}
+						<span className="sr-only">Category:</span> {categories[0].name}
 					</p>
 				)}
 			</div>
 			<p className="text-sm font-semibold text-gray-900">
-				<span className="sr-only">Cena:</span> {formatMoney(price / 100)}
+				<span className="sr-only">Price: </span> {formatMoney(price / 100)}
 			</p>
+			<p className="text-sm font-semibold text-gray-900">{averageRating ?? "-"} / 5</p>
 		</div>
 	);
 };

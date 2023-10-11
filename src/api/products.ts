@@ -1,5 +1,6 @@
 import { executeGraphQl } from "@/api/utils";
 import {
+	type ProductOrderByInput,
 	ProductsGetListByCategorySlugDocument,
 	ProductsGetListByCollectionSlugDocument,
 	ProductsGetListByNameOrCategoryNameDocument,
@@ -31,12 +32,25 @@ export async function getTotalAmountOfProducts() {
 	return totalAmountOfProducts;
 }
 
-export async function getProductsList({ first, skip }: { first: number; skip: number }) {
+export async function getProductsList({
+	first,
+	skip,
+	orderBy,
+}: {
+	first: number;
+	skip: number;
+	orderBy?: ProductOrderByInput;
+}) {
+	if (!orderBy) {
+		orderBy = "createdAt_ASC";
+	}
+
 	return executeGraphQl({
 		query: ProductsGetListDocument,
 		variables: {
 			first,
 			skip,
+			orderBy,
 		},
 	});
 }
