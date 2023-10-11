@@ -44,7 +44,7 @@ export default async function PaginatedProductsPage({
 	return (
 		<main>
 			<TopBarWrapper>
-				<h2 className="font-bold">Products</h2>
+				<h2 className="font-bold">Productss</h2>
 			</TopBarWrapper>
 			<section className="mx-auto max-w-md p-12 sm:max-w-2xl lg:max-w-6xl">
 				<ProductList products={products} />
