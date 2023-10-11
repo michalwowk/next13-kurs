@@ -11,3 +11,10 @@ export const getTotalNumberOfPages = (
 ): number => {
 	return Math.ceil(totalAmountOfProducts / PRODUCTS_PER_PAGE);
 };
+
+export const transformIntoTitle = (str: string) => {
+	return str
+		.split("-")
+		.map((word) => word[0]?.toUpperCase() + word.slice(1))
+		.join(" ");
+};

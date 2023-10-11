@@ -1,11 +1,12 @@
 import { PRODUCTS_PER_PAGE } from "../../../../constants";
-import { getTotalNumberOfPages } from "../../../../utils";
+import { getTotalNumberOfPages, transformIntoTitle } from "../../../../utils";
 import { ProductsPagination } from "@/ui/molecules/ProductsPagination";
 import { ProductList } from "@/ui/organisms/ProductList";
 import {
 	getProductsListByCategorySlug,
 	getTotalAmountOfProductsByCategorySlug,
 } from "@/api/products";
+import { TopBarWrapper } from "@/ui/molecules/TopBar";
 
 export default async function PaginatedProductsPage({
 	params: { pageNumber, categorySlug },
@@ -26,6 +27,9 @@ export default async function PaginatedProductsPage({
 
 	return (
 		<main>
+			<TopBarWrapper>
+				<h2 className="text-bold">{transformIntoTitle(categorySlug)}</h2>
+			</TopBarWrapper>
 			<section className="mx-auto max-w-md p-12 sm:max-w-2xl lg:max-w-6xl">
 				<ProductList products={products} />
 				<ProductsPagination
