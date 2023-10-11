@@ -4,10 +4,6 @@ import { ProductListItem } from "@/ui/molecules/ProductListItem";
 export const SuggestedProducts = async () => {
 	const { products } = await getSuggestedProductsList();
 
-	if (!products.length) {
-		return null;
-	}
-
 	return (
 		<div className="mt-10">
 			<h2 className="text-xl font-bold">Suggested Products</h2>
