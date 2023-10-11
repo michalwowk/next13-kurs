@@ -8,13 +8,13 @@ export const TopNavCart = async () => {
 	const cartId = cookies().get("cartId")?.value;
 	const cart = cartId ? await getCartById(cartId) : null;
 
-	const count = cart?.order?.orderItems.length || 0;
+	const quantity = cart?.order?.orderItems.reduce((acc, item) => acc + item.quantity, 0) ?? 0;
 
 	return (
 		<Link className="relative flex" href="/cart">
 			<ShoppingCart width={30} height={30} />{" "}
 			<span className="opacity-85 absolute left-5 top-5 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-xs text-slate-100">
-				{count}
+				{quantity}
 			</span>
 		</Link>
 	);
