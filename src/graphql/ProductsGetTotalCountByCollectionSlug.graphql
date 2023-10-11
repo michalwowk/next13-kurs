@@ -1,0 +1,7 @@
+query ProductsGetTotalCountByCollectionSlug($collectionSlug: String) {
+	productsConnection(where: { collections_some: { slug: $collectionSlug } }) {
+		aggregate {
+			count
+		}
+	}
+}

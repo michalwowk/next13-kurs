@@ -6,6 +6,7 @@ import {
 	ProductsGetListDocument,
 	ProductsGetSuggestedListDocument,
 	ProductsGetTotalCountByCategorySlugDocument,
+	ProductsGetTotalCountByCollectionSlugDocument,
 	ProductsGetTotalCountDocument,
 } from "@/gql/graphql";
 
@@ -40,11 +41,21 @@ export async function getProductsList({ first, skip }: { first: number; skip: nu
 	});
 }
 
-export async function getProductsListByCollectionSlug(collectionSlug: string) {
+export async function getProductsListByCollectionSlug({
+	collectionSlug,
+	first,
+	skip,
+}: {
+	collectionSlug: string;
+	first: number;
+	skip: number;
+}) {
 	return executeGraphQl({
 		query: ProductsGetListByCollectionSlugDocument,
 		variables: {
 			collectionSlug,
+			first,
+			skip,
 		},
 	});
 }
@@ -73,6 +84,17 @@ export async function getTotalAmountOfProductsByCategorySlug(categorySlug: strin
 		query: ProductsGetTotalCountByCategorySlugDocument,
 		variables: {
 			categorySlug,
+		},
+	});
+
+	return productsConnection.aggregate.count;
+}
+
+export async function getTotalAmountOfProductsByCollectionSlug(collectionSlug: string) {
+	const { productsConnection } = await executeGraphQl({
+		query: ProductsGetTotalCountByCollectionSlugDocument,
+		variables: {
+			collectionSlug,
 		},
 	});
 

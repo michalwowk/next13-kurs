@@ -35,20 +35,38 @@ export const TopNavbar = () => {
 					<li>
 						<ActiveLink
 							className="font-semibold"
-							href="/collections"
+							href="/collections/new-arrivals"
 							activeClassName="border-b-2 border-b-slate-600"
 						>
-							Collections
+							New Arrivals
 						</ActiveLink>
 					</li>
 
 					<li>
 						<ActiveLink
 							className="font-semibold"
-							href="/categories"
+							href="/categories/t-shirts"
 							activeClassName="border-b-2 border-b-slate-600"
 						>
-							Categories
+							T-shirts
+						</ActiveLink>
+					</li>
+					<li>
+						<ActiveLink
+							className="font-semibold"
+							href="/categories/hoodies"
+							activeClassName="border-b-2 border-b-slate-600"
+						>
+							Hoodies
+						</ActiveLink>
+					</li>
+					<li>
+						<ActiveLink
+							className="font-semibold"
+							href="/categories/accessories"
+							activeClassName="border-b-2 border-b-slate-600"
+						>
+							Accessories
 						</ActiveLink>
 					</li>
 				</ul>

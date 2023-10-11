@@ -10863,6 +10863,13 @@ export type ProductsGetTotalCountByCategorySlugQueryVariables = Exact<{
 
 export type ProductsGetTotalCountByCategorySlugQuery = { productsConnection: { aggregate: { count: number } } };
 
+export type ProductsGetTotalCountByCollectionSlugQueryVariables = Exact<{
+  collectionSlug?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type ProductsGetTotalCountByCollectionSlugQuery = { productsConnection: { aggregate: { count: number } } };
+
 export type ReviewCreateMutationVariables = Exact<{
   productId: Scalars['ID']['input'];
   headline: Scalars['String']['input'];
@@ -11180,6 +11187,15 @@ export const ProductsGetTotalCountByCategorySlugDocument = new TypedDocumentStri
   }
 }
     `) as unknown as TypedDocumentString<ProductsGetTotalCountByCategorySlugQuery, ProductsGetTotalCountByCategorySlugQueryVariables>;
+export const ProductsGetTotalCountByCollectionSlugDocument = new TypedDocumentString(`
+    query ProductsGetTotalCountByCollectionSlug($collectionSlug: String) {
+  productsConnection(where: {collections_some: {slug: $collectionSlug}}) {
+    aggregate {
+      count
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ProductsGetTotalCountByCollectionSlugQuery, ProductsGetTotalCountByCollectionSlugQueryVariables>;
 export const ReviewCreateDocument = new TypedDocumentString(`
     mutation ReviewCreate($productId: ID!, $headline: String!, $name: String!, $email: String!, $content: String!, $rating: Int!) {
   createReview(
