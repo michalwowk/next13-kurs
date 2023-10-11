@@ -1,3 +1,4 @@
+import { type Metadata } from "next/types";
 import { PRODUCTS_PER_PAGE } from "../../../../constants";
 import { getTotalNumberOfPages, transformIntoTitle } from "../../../../utils";
 import { ProductsPagination } from "@/ui/molecules/ProductsPagination";
@@ -7,6 +8,16 @@ import {
 	getTotalAmountOfProductsByCollectionSlug,
 } from "@/api/products";
 import { TopBarWrapper } from "@/ui/molecules/TopBar";
+
+export async function generateMetadata({
+	params: { collectionSlug },
+}: {
+	params: { collectionSlug: string };
+}): Promise<Metadata> {
+	return {
+		title: transformIntoTitle(collectionSlug),
+	};
+}
 
 export default async function PaginatedProductsPage({
 	params: { pageNumber, collectionSlug },
