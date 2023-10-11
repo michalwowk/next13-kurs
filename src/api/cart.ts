@@ -26,7 +26,10 @@ export async function getOrCreateCart() {
 		throw new Error("Failed to create cart");
 	}
 
-	cookies().set("cartId", newCart.id);
+	cookies().set("cartId", newCart.id, {
+		httpOnly: true,
+		sameSite: "lax",
+	});
 	return newCart;
 }
 
@@ -73,9 +76,11 @@ export async function getCartById(cartId: string) {
 		variables: {
 			id: cartId,
 		},
+		next: {
+			tags: ["cart"],
+			revalidate: 0,
+		},
 	});
-
-	revalidateTag("cart");
 
 	return res;
 }
