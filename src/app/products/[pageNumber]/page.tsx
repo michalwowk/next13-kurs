@@ -43,10 +43,10 @@ export default async function PaginatedProductsPage({
 
 	return (
 		<main>
+			<TopBarWrapper>
+				<h2>Products</h2>
+			</TopBarWrapper>
 			<section className="mx-auto max-w-md p-12 sm:max-w-2xl lg:max-w-6xl">
-				<TopBarWrapper>
-					<h2>Products</h2>
-				</TopBarWrapper>
 				<ProductList products={products} />
 				<ProductsPagination totalNumberOfPages={totalNumberOfPages} route="/products" />
 			</section>

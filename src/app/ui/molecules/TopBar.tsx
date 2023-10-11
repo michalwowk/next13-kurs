@@ -2,7 +2,7 @@
 
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { type Route } from "next/types";
+import { type Route } from "next";
 import { type ProductOrderByInput } from "@/gql/graphql";
 
 const options: { label: string; value: ProductOrderByInput; testId: string }[] = [
@@ -38,13 +38,13 @@ const options: { label: string; value: ProductOrderByInput; testId: string }[] =
 	},
 ];
 
-export const TopBarWrapper = async ({ children }: { children: React.ReactNode }) => {
+export const TopBarWrapper = ({ children }: { children: React.ReactNode }) => {
 	const router = useRouter();
 	const pathname = usePathname();
 
 	return (
 		<div className="bg-gray-100">
-			<div className="mx-auto flex max-w-7xl justify-between px-8">
+			<div className="container mx-auto flex justify-between px-8">
 				<div className="mx-auto py-8">{children}</div>
 				<select
 					name="sort-by"
