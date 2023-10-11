@@ -26,9 +26,6 @@ export async function executeGraphQl<TResult, TVariables>({
 		body: JSON.stringify({
 			query,
 			variables,
-			next: {
-				tags: ["cart"],
-			},
 		}),
 		cache,
 		next,
