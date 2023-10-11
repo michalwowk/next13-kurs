@@ -74,4 +74,6 @@ export async function getCartById(cartId: string) {
 			id: cartId,
 		},
 	});
+
+	revalidateTag("cart");
 }
