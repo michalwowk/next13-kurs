@@ -68,7 +68,7 @@ export async function addProductToCart({
 }
 
 export async function getCartById(cartId: string) {
-	return executeGraphQl({
+	const res = executeGraphQl({
 		query: CartGetByIdDocument,
 		variables: {
 			id: cartId,
@@ -76,4 +76,6 @@ export async function getCartById(cartId: string) {
 	});
 
 	revalidateTag("cart");
+
+	return res;
 }

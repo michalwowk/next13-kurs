@@ -8,6 +8,8 @@ export const TopNavCart = async () => {
 	const cartId = cookies().get("cartId")?.value;
 	const cart = cartId ? await getCartById(cartId) : null;
 
+	console.log(cart);
+
 	const quantity = cart?.order?.orderItems.reduce((acc, item) => acc + item.quantity, 0) ?? 0;
 
 	return (
