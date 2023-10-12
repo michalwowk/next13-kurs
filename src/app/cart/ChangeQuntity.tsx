@@ -14,7 +14,6 @@ export function ChangeQuantity({ itemId, quantity }: { itemId: string; quantity:
 			<button
 				className={clsx("h-6 w-6 border", optimisticQuantity === 1 && "opacity-50")}
 				data-testid="decrement"
-				disabled={optimisticQuantity === 1}
 				formAction={async () => {
 					setOptimisticQuantity(optimisticQuantity - 1);
 					await changeItemQuantity(itemId, optimisticQuantity - 1);
