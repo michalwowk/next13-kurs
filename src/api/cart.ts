@@ -84,3 +84,24 @@ export async function getCartById(cartId: string) {
 
 	return res;
 }
+
+export async function getCartFromCookies() {
+	const cartId = cookies().get("cartId")?.value;
+
+	if (cartId) {
+		const cart = await executeGraphQl({
+			query: CartGetByIdDocument,
+			variables: {
+				id: cartId,
+			},
+			next: {
+				tags: ["cart"],
+				revalidate: 0,
+			},
+		});
+
+		if (cart.order) {
+			return cart.order;
+		}
+	}
+}

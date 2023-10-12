@@ -1,14 +1,12 @@
-import { cookies } from "next/headers";
 import { ShoppingCart } from "lucide-react";
 
 import Link from "next/link";
-import { getCartById } from "@/api/cart";
+import { getCartFromCookies } from "@/api/cart";
 
 export const TopNavCart = async () => {
-	const cartId = cookies().get("cartId")?.value;
-	const cart = cartId ? await getCartById(cartId) : null;
+	const cart = await getCartFromCookies();
 
-	const quantity = cart?.order?.orderItems.reduce((acc, item) => acc + item.quantity, 0) ?? 0;
+	const quantity = cart?.orderItems.reduce((acc, item) => acc + item.quantity, 0) ?? 0;
 
 	return (
 		<Link className="relative flex" href="/cart" data-testid="cart-icon">
